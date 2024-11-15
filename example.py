@@ -1,4 +1,5 @@
-from classes import *
+from src.current_account import CurrentAccount
+from src.saving_account import SavingAccount
 
 # открыть файлы для ввода
 account_file = open("ACCOUNTS.DAT", 'r')
