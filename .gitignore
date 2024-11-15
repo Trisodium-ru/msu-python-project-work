@@ -1,2 +1,3 @@
 __pycache__/
-database/session/*
+database/session/accounts.csv
+database/session/transactions.csv
