@@ -12,7 +12,11 @@ class SavingAccount(Account):  # Наследование суперкласса
         # Для сберегательного счёта указываем ежемесячную ставку в процентах.
         self.__interest = 0.01 / 12
 
-    def display_monthly_statement(self):
-        self.setBalance(self.getBalance() * (1 + self.__interest))
+    def display_monthly_statement(self) -> None:
+        """ Переопределение вывода ежемесячной выписки по счёту. """
+
+        # Устанавливаем накопленные проценты за месяц.
+        self.set_balance(self.get_balance() * Decimal(1 + self.__interest))
+        # Выводим отчёт.
         print("Ежемесячная выписка по сберегательному счету ")
-        super().display()
+        self.display()

@@ -44,7 +44,7 @@ def read_transactions(filename: str, delimeter: str = ',') -> [Transaction]:
 
     # Закрываем файл.
     transaction_file.close()
-    
+
     # Возвращаем результат (список транзакций).
     return transactions
 
@@ -88,7 +88,7 @@ def read_accounts(filename: str, delimeter: str = ',') -> [CurrentAccount | Savi
         balance = Decimal(account_fields[3])  # Баланс на счету.
 
         # Добавляем ФИО, номера счетов пользователей в списки.
-        all_accounts_numbers.add(account_fields[1])
+        all_accounts_numbers.add(f'{account_fields[0]},{account_fields[1]}')
         all_users_numbers.add(account_fields[2])
 
         # В зависимости от типа счёта создаются разные классы счёта.
@@ -107,18 +107,30 @@ def read_accounts(filename: str, delimeter: str = ',') -> [CurrentAccount | Savi
     accounts_file.close()
 
     # Возвращаем результат.
-    return accounts, all_accounts_numbers, all_users_numbers
+    return accounts, list(all_accounts_numbers), all_users_numbers
 
 
 def get_line_fields(line: str, delimeter: str) -> list:
-    # Чистим переносы строк и пробелы по краям, разбиваем строку на список полей по заданному разделителю.
+    """ Чистит переносы строк и пробелы по краям, разбивает строку на список полей по заданному разделителю."""
     return line.strip().split(delimeter)
 
 
 def copy_file(from_path: str, to_path: str) -> None:
+    """
+    Копирование файла в новый файл (перезапись).
+
+    Parameters
+    ----------
+    from_path : str
+        Путь исходного файла, из которого копируются строки.
+
+    to_path: str
+        Путь конечного файла, в который копируются строки.
+    """
+
     # Открываем файлы для копирования.
-    from_file = open(from_path, 'r') # Режим чтения.
-    to_file = open(to_path, 'w') # Режим записи.
+    from_file = open(from_path, 'r')  # Режим чтения.
+    to_file = open(to_path, 'w')  # Режим записи.
 
     # Построчно копируем файл.
     while from_file_line := from_file.readline():

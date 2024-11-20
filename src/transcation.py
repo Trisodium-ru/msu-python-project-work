@@ -10,7 +10,7 @@ class Transaction:
 
         Parameters
         ----------
-        self.__transaction_date : date
+        self.__transaction_date : datetime.date
             Дата транзакции.
 
         self.__account_type : str
@@ -33,6 +33,18 @@ class Transaction:
         self.__transaction_type = transaction_type
         self.__transaction_amount = transaction_amount
 
-    def get_transaction_date(self):
+    def get_transaction_date(self) -> datetime.date:
+        """ Получить дату транзакции. """
         return self.__transaction_date
 
+    def get_account_number(self) -> str:
+        """ Получить номер счёта транзакции. """
+        return self.__account_number
+
+    def get_transaction_type(self) -> str:
+        """ Получить тип транзакции. """
+        return self.__transaction_type
+
+    def get_transaction_amount(self) -> Decimal:
+        """ Получить сумму транзакции. """
+        return self.__transaction_amount
