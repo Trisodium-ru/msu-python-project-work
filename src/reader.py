@@ -139,3 +139,27 @@ def copy_file(from_path: str, to_path: str) -> None:
     # Закрываем файлы после копироваания.
     from_file.close()
     to_file.close()
+
+
+def write_list_to_file(file_path: str, list_to_write: list) -> None:
+    """
+    Запись списка строк в файл.
+
+    Parameters
+    ----------
+    file_path : str
+        Путь к файлу для записи.
+
+    list_to_write: list
+        Список строк для записи.
+    """
+
+    # Открываем файл для записи.
+    to_file = open(file_path, 'w')  # Режим записи.
+
+    # Записываем данные построчно.
+    for line in list_to_write:
+        to_file.write(line)
+
+    # Закрываем файл после записи.
+    to_file.close()

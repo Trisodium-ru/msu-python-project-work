@@ -45,12 +45,15 @@ class LambdaBank:
         self.__session_accounts_file_path = 'database/session/accounts.csv'  # База данных счетов сессии приложения.
         self.__session_transactions_file_path = 'database/session/transactions.csv'  # Оригинальный файл данных транзакций.
 
+        # Путь до файла для сохранения списка счетов.
+        self.__session_accounts_file_path = 'database/session/saved_accounts.csv'  # Оригинальный файл данных транзакций.
+
         # Настройки логирования (опционально).
-        self.__logging = logging # Включить логирование.
-        self.__logging_pause = logging_pause # Пауза между выводом.
+        self.__logging = logging  # Включить логирование.
+        self.__logging_pause = logging_pause  # Пауза между выводом.
 
         # Существующие аттрибуты класса.
-        self.__accounts = None # Список счетов CurrencyAccount | SavingAccount.
+        self.__accounts = None  # Список счетов CurrencyAccount | SavingAccount.
         self.__accounts_numbers = None  # Уникальный список номеров счетов пользователей.
         self.__users_names = None  # Уникальный список ФИО пользователей.
         self.__transactions = []  # Список транзакий ожидающих обработки.
@@ -159,11 +162,13 @@ class LambdaBank:
         # Списание или пополнение в зависимости от типа.
         if transaction_type == 'D':  # Пополнение.
             if not account.deposit(transaction.get_transaction_amount()):
-                self.log(f'Ошибка проводки транзакции 3: нельзя произвести пополнение {transaction.get_transaction_amount()} (лимиты счёта).')
+                self.log(
+                    f'Ошибка проводки транзакции 3: нельзя произвести пополнение {transaction.get_transaction_amount()} (лимиты счёта).')
                 return False
         elif transaction_type == 'W':  # Снятие.
             if not account.withdraw(transaction.get_transaction_amount()):
-                self.log(f'Ошибка проводки транзакции 4: нельзя произвести снятие {transaction.get_transaction_amount()} (лимиты счёта).')
+                self.log(
+                    f'Ошибка проводки транзакции 4: нельзя произвести снятие {transaction.get_transaction_amount()} (лимиты счёта).')
                 return False
 
         # Успешная проводка транзакции.
@@ -372,7 +377,17 @@ class LambdaBank:
         return list(self.__users_names)
 
     def save_users_accounts_to_file(self):
-        pass
+        """ Сохранение списка счетов в файл. """
+
+        # Создание списка для записи в файл.
+        to_write = []
+        for account in self.__accounts:
+            to_write.append(
+                f'{account.get_account_type()},{account.get_account_number()},{account.get_customer_name()},{account.get_balance()}\n'
+            )
+
+        # Запись в файл.
+        reader.write_list_to_file(self.__session_accounts_file_path, to_write)
 
     def carry_out_random_users_transactions(self, from_random: int, to_random: int):
         # Генерация случайных транзакций.

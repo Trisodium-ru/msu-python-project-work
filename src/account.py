@@ -57,7 +57,7 @@ class Account:
         bool
             Баланс установлен.
         """
-        self.__balance = new_balance
+        self.__balance = new_balance.quantize(Decimal("1.00"))
         return True
 
     def check_limit(self, new_amount: Decimal) -> bool:
@@ -128,7 +128,7 @@ class Account:
         """ Вывод информации по счету. """
         print("Номер счета:", self.__account_number)
         print("Клиент:", self.__user_name)
-        print("Баланс (λ): {0:.2f}".format(self.__balance))
+        print(f"Баланс (λ): {self.__balance}")
 
     def display_monthly_statement(self) -> None:
         """ Вывод месячного отчёта. """
