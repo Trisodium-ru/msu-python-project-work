@@ -389,6 +389,8 @@ class LambdaBank:
         # Запись в файл.
         reader.write_list_to_file(self.__session_accounts_file_path, to_write)
 
+        self.log(f'Список счетов успешно сохранён ({len(to_write)} строк).')
+
     def carry_out_random_users_transactions(self, from_random: int, to_random: int):
         # Генерация случайных транзакций.
         for _ in range(random.randint(from_random, to_random)):
